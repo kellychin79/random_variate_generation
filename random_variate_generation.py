@@ -5,8 +5,112 @@
 
 
 import random
+import numpy as np
 import matplotlib.pyplot as plt
 import math
+
+
+# ## Uniform distribution
+
+# - Statistical meaning: Within a predefined interval, all outcomes have the same probability of occurring.
+
+# - Real-life examples: 
+#     - Six-sided dice: the probability of each side
+#     - Coin: the probability of head vs. tail
+#     - A deck of cards: the probability of each shape
+
+# - Graphs:
+# ![image-7.png](attachment:image-7.png)
+
+# In[36]:
+
+
+def generate_prn():
+    return random.random()
+
+
+# In[411]:
+
+
+# generate x uniform random variate for n euqally likely outcomes
+
+def generate_uniform_rv(n, x):
+    outputs = []
+    
+    for i in range(x):
+        intervals = np.array([j/n for j in range(1,n+1)])
+        prn = generate_prn()
+
+        first__guess = sum(prn >= intervals)
+        if sum(prn == intervals) == 0: # prn is not on the boundary
+            final_guess = first__guess + 1
+        else: # prn is on the boundary
+            final_guess = first__guess
+        
+        outputs.append(final_guess)
+        
+    return outputs
+
+
+# In[412]:
+
+
+def draw_uniform_rv(n, x):
+    rv_outputs = generate_uniform_rv(n, x)
+    
+    fig, ax = plt.subplots(1,2)
+
+    ax[0].set_title(label='n outcomes = '+str(n)+', x = '+str(x))
+    ax[0].set_ylabel('count')
+    ax[0].hist(x=rv_outputs)
+    
+    ax[1].set_title(label='n outcomes = '+str(n)+', x = '+str(x))
+    ax[1].set_ylabel('probablity')
+    values = []
+    probs = []
+    total_num = len(rv_outputs)
+    for i in rv_outputs:
+        values.append(i)
+        probs.append(rv_outputs.count(i)/total_num)
+    ax[1].bar(x=values, height=probs)
+    
+    return rv_outputs
+
+
+# In[413]:
+
+
+uniform_outcomes = 6
+
+
+# In[431]:
+
+
+# small sample size
+uniform_size = 20
+
+uniform_rv_outputs = draw_uniform_rv(n=uniform_outcomes, x=uniform_size)
+
+
+# In[432]:
+
+
+uniform_rv_outputs
+
+
+# In[429]:
+
+
+# big sample size
+uniform_size = 1000
+
+uniform_rv_outputs = draw_uniform_rv(n=uniform_outcomes, x=uniform_size)
+
+
+# In[430]:
+
+
+uniform_rv_outputs
 
 
 # ## Bernoulli distribution
@@ -19,13 +123,6 @@ import math
 
 # - Graphs:
 # ![image-2.png](attachment:image-2.png)
-
-# In[36]:
-
-
-def generate_prn():
-    return random.random()
-
 
 # In[37]:
 
@@ -340,7 +437,7 @@ geometric_rv_outputs
 
 # ## Poisson distribution
 
-# - Statistical meaning: The probability of an event happening a certain number of times *k* within a given interval of time or space. 
+# - Statistical meaning: The probability of an event happening *k* times within a time period.
 
 # - Real-life examples: 
 #     - Call Center: the probability that the call center receives more than 5 phone calls during the noon, given the average 3 calls per hour during that time period.
@@ -349,23 +446,23 @@ geometric_rv_outputs
 # - Graphs:
 # ![image-6.png](attachment:image-6.png)
 
-# In[338]:
+# In[434]:
 
 
-# generate x poisson random variate in one time unit
+# generate x poisson random variate within a time period
 
 def generate_poisson_rv(l, x):
     outputs = []
     
     for i in range(x):
         prn = generate_prn()
-        time_unit = 0 
+        time_count = 0 
         cmf = 0
         while prn > cmf:
-            pmf = math.e**-l*l**time_unit/math.factorial(time_unit)
+            pmf = math.e**-l*l**time_count/math.factorial(time_count)
             cmf = cmf + pmf
-            time_unit += 1
-        outputs.append(time_unit)    
+            time_count += 1
+        outputs.append(time_count)    
         
     return outputs
 
@@ -389,13 +486,13 @@ def draw_poisson_rv(l, x):
     return rv_outputs
 
 
-# In[378]:
+# In[435]:
 
 
 poisson_lambda = 2
 
 
-# In[380]:
+# In[436]:
 
 
 # small sample size
@@ -404,37 +501,154 @@ lambda_size = 10
 poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=lambda_size)
 
 
-# In[381]:
+# In[437]:
 
 
 poisson_rv_outputs
 
 
-# In[382]:
+# In[438]:
 
 
 # big sample size
-lambda_size = 1000
+poisson_size = 1000
 
-poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=lambda_size)
+poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
 
 
-# In[383]:
+# In[439]:
 
 
 poisson_rv_outputs
 
 
-# In[385]:
+# In[440]:
 
 
-lambda_size = 1000
+poisson_size = 1000
 
 poisson_lambda = 2
-poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=lambda_size)
+poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
 
 poisson_lambda = 4
-poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=lambda_size)
+poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
+
+
+# ## Exponential distribution
+
+# - Statistical meaning: The probability of *x* time unit elapsed between events, given the event has a Poisson rate *lambda*, that is the event occurs *lambda* times on average within a time period.
+
+# - Real-life examples: 
+#     - Earthquake: the amount of time from now until an earthquake occurs
+#     - Airport: the amount of time passengers arriving at the the security point
+
+# - Graphs: (Y axis is basically lambda, the area below the curve is the probability)
+# ![image-11.png](attachment:image-11.png)
+
+# In[569]:
+
+
+# generate x exponential random variate between two consecutive events
+
+def generate_exponential_rv(l, x):
+    outputs = []
+    
+    for i in range(x):
+        prn = generate_prn()
+        cdf = 0
+        time_unit = 0
+        
+        while prn > cdf:
+            cdf = 1-math.e**(-l*time_unit)
+            time_unit += 1
+        
+        # offset 1 that is added in the last round
+        time_unit -= 1
+        
+        outputs.append(time_unit)    
+        
+    return outputs
+
+
+# In[570]:
+
+
+def draw_exponential_rv(l, x):
+    rv_outputs = generate_exponential_rv(l, x)
+
+    plt.title(label='lambda = '+str(l))
+    
+    values = []
+    counts = []
+    for i in set(rv_outputs):
+        values.append(i)
+        counts.append(rv_outputs.count(i))
+    
+    if x <= 10:
+        plt.bar(x=values, height=counts)
+    else:
+        plt.plot(values, counts)
+    
+    return rv_outputs
+
+
+# In[585]:
+
+
+exponential_lambda = 1
+
+
+# In[586]:
+
+
+# small sample size
+exponential_size = 10
+
+exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+
+
+# In[587]:
+
+
+exponential_rv_outputs
+
+
+# In[588]:
+
+
+# big sample size
+exponential_size = 1000
+
+exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+
+
+# In[589]:
+
+
+exponential_rv_outputs
+
+
+# In[590]:
+
+
+exponential_lambda = 0.5
+exponential_size = 10
+d = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+
+
+# In[591]:
+
+
+exponential_size = 1000
+
+exponential_lambda = 0.5
+d = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+
+exponential_lambda = 1
+d = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+
+exponential_lambda = 1.5
+d = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
 
 
 # In[ ]:
