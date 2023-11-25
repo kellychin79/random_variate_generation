@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import math
 
 
+# ####  The starting place for random variate generation is usually the generation of random numbers, which are random variates that are uniformly distributed on the interval from 0 to 1 (uniform [0, 1]).
+
 # ## Uniform distribution
 
 # - Statistical meaning: Within a predefined interval, all outcomes have the same probability of occurring.
@@ -651,8 +653,221 @@ exponential_lambda = 1.5
 d = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
 
 
-# In[ ]:
+# ## Weibull distribution
+
+# - Statistical meaning: A generalization of Exponential Distribution, which is the probability of *x* time unit elapsed between events, given the event has a Poisson rate *lambda*. *k* in Weibull distribution: < 1 meaning failure decreases with time; > 1 meaning failure increases with time; = 1 meaning failure constant with time, that is Exponential distribution.
+
+# - Real-life examples: 
+#     - Defect products: the amount of times until the first defective unit; the amount of times between failure events
+#     - Web use: The amount of time a user spends on a web page (a.k.a between websites)
+
+# - Graphs: 
+# ![image-13.png](attachment:image-13.png)
+
+# In[793]:
+
+
+# probability density function
+
+l = 1
+ks = [0.5, 1, 1.5, 5]
+
+for k in ks:
+    outputs = []
+    for x in range(50):
+        if k < 1 and x == 0:
+            continue
+        x = x/10
+        y = (k/l)*(x/l)**(k-1)*math.e**-(x/l)**k
+        outputs.append(y)
+    plt.plot(outputs)
 
 
 
+# In[657]:
+
+
+# generate x weibull random variate between two consecutive events
+
+def generate_weibull_rv(l, x, k):
+    outputs = []
+    
+    for i in range(x):
+        prn = generate_prn()
+        
+        logged_num = (-math.log(prn, 2))**1/k
+        
+        X = 1/l * logged_num
+        
+        outputs.append(X)    
+        
+    return outputs
+
+
+# In[688]:
+
+
+def draw_weibull_rv(l, x, k):
+    rv_outputs = generate_weibull_rv(l, x, k)
+
+    plt.title(label='lambda = '+str(l)+';k = '+str(k))
+    
+    values = []
+    counts = []
+    for i in set(rv_outputs):
+        values.append(i)
+        counts.append(rv_outputs.count(i))
+    
+    plt.hist(rv_outputs)
+    
+    return rv_outputs
+
+
+# In[698]:
+
+
+weibull_lambda = 1
+weibull_k = 0.5
+weibull_size = 1000
+
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+
+
+# In[699]:
+
+
+weibull_lambda = 1
+weibull_k = 1
+weibull_size = 1000
+
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+
+
+# In[700]:
+
+
+weibull_lambda = 1
+weibull_k = 2
+weibull_size = 1000
+
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+
+
+# In[701]:
+
+
+weibull_size = 1000
+weibull_lambda = 1
+
+weibull_k = 0.5 # failure decreases with time
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+
+weibull_k = 1 # failure constant with time
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+
+weibull_k = 2 # failure increases with time
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+
+
+# ## Triangular distribution
+
+# - Statistical meaning: A continuous probability distribution with lower limit *a*, upper limit *b* and a mode *c*.
+
+# - Real-life examples: 
+#     - Call Center: during the noon, the number of call arriving at this call center unit is at lesat 5, at most 20, and usually 12
+#     - Store: during the weekend, the number of customers arriving at this store is at least 1K, at most 10K, and usually 6K
+
+# - Graphs: 
+# ![image-14.png](attachment:image-14.png)
+
+# In[813]:
+
+
+# generate x triangular random variate with lower limit a , upper limit c and mode c
+
+def generate_triangular_rv(a, b, c, x):
+    outputs = []
+    
+    for i in range(x):
+        prn = generate_prn()
+        
+        if prn < 0.5:
+            X = a + math.sqrt(prn * (b-a) * (c-a))
+        else:
+            X = b - math.sqrt((1-prn) * (b-a) * (b-c))
+        
+        outputs.append(X)    
+        
+    return outputs
+
+
+# In[814]:
+
+
+def draw_triangular_rv(a, b, c, x):
+    rv_outputs = generate_triangular_rv(a, b, c, x)
+
+    plt.title(label='a = '+str(a)+';b = '+str(b)+';c = '+str(c))
+    
+    values = []
+    counts = []
+    for i in set(rv_outputs):
+        values.append(i)
+        counts.append(rv_outputs.count(i))
+    
+    plt.hist(rv_outputs)
+    
+    return rv_outputs
+
+
+# In[815]:
+
+
+triangular_lower = 5
+triangular_upper = 20
+triangular_mode = 12
+
+
+# In[816]:
+
+
+# small sample size
+triangular_size = 10
+
+triangular_rv_outputs = draw_triangular_rv(a=triangular_lower, b=triangular_upper, c=triangular_mode, 
+                                          x=triangular_size)
+
+
+# In[817]:
+
+
+triangular_rv_outputs
+
+
+# In[818]:
+
+
+# big sample size
+triangular_size = 1000
+
+triangular_rv_outputs = draw_triangular_rv(a=triangular_lower, b=triangular_upper, c=triangular_mode, 
+                                          x=triangular_size)
+
+
+# In[819]:
+
+
+triangular_rv_outputs
+
+
+# In[820]:
+
+
+triangular_lower = 1000
+triangular_upper = 10000
+triangular_mode = 6000
+triangular_size = 1000
+
+triangular_rv_outputs = draw_triangular_rv(a=triangular_lower, b=triangular_upper, c=triangular_mode, 
+                                          x=triangular_size)
 
