@@ -769,45 +769,42 @@ weibull_k = 2 # failure increases with time
 weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
 
 
-# ## Triangular distribution
+# ## Normal distribution
 
-# - Statistical meaning: A continuous probability distribution with lower limit *a*, upper limit *b* and a mode *c*.
+# - Statistical meaning: A continuous probability distribution with mean and variance, and the data is symmetrically distributed with no skew
 
 # - Real-life examples: 
-#     - Call Center: during the noon, the number of call arriving at this call center unit is at lesat 5, at most 20, and usually 12
-#     - Store: during the weekend, the number of customers arriving at this store is at least 1K, at most 10K, and usually 6K
+#     - Heights
+#     - SAT scores
+#     - Restaurant Reviews
 
 # - Graphs: 
-# ![image-14.png](attachment:image-14.png)
+# ![image-16.png](attachment:image-16.png)
 
-# In[813]:
+# In[846]:
 
 
-# generate x triangular random variate with lower limit a , upper limit c and mode c
+# generate x normal random variate with mean and variance
 
-def generate_triangular_rv(a, b, c, x):
+def generate_normal_nv(mu, variance, x):
     outputs = []
     
     for i in range(x):
-        prn = generate_prn()
-        
-        if prn < 0.5:
-            X = a + math.sqrt(prn * (b-a) * (c-a))
-        else:
-            X = b - math.sqrt((1-prn) * (b-a) * (b-c))
-        
-        outputs.append(X)    
-        
+        U = generate_prn()
+        Z = (U**0.135-(1-U)**0.135)/0.1975
+        X = mu + math.sqrt(variance)*Z
+        outputs.append(X)
+
     return outputs
 
 
-# In[814]:
+# In[847]:
 
 
-def draw_triangular_rv(a, b, c, x):
-    rv_outputs = generate_triangular_rv(a, b, c, x)
+def draw_normal_rv(mu, variance, x):
+    rv_outputs = generate_normal_nv(mu, variance, x)
 
-    plt.title(label='a = '+str(a)+';b = '+str(b)+';c = '+str(c))
+    plt.title(label='mu = '+str(mu)+';variance = '+str(variance))
     
     values = []
     counts = []
@@ -820,54 +817,39 @@ def draw_triangular_rv(a, b, c, x):
     return rv_outputs
 
 
-# In[815]:
+# In[849]:
 
 
-triangular_lower = 5
-triangular_upper = 20
-triangular_mode = 12
+normal_mu = 3
+normal_variance = 16
 
 
-# In[816]:
+# In[851]:
 
 
 # small sample size
-triangular_size = 10
+normal_size = 10
 
-triangular_rv_outputs = draw_triangular_rv(a=triangular_lower, b=triangular_upper, c=triangular_mode, 
-                                          x=triangular_size)
-
-
-# In[817]:
+normal_rv_outputs = draw_normal_rv(mu=normal_mu, variance=normal_variance, x=normal_size)
 
 
-triangular_rv_outputs
+# In[853]:
 
 
-# In[818]:
+normal_rv_outputs
+
+
+# In[854]:
 
 
 # big sample size
-triangular_size = 1000
+normal_size = 1000
 
-triangular_rv_outputs = draw_triangular_rv(a=triangular_lower, b=triangular_upper, c=triangular_mode, 
-                                          x=triangular_size)
-
-
-# In[819]:
+normal_rv_outputs = draw_normal_rv(mu=normal_mu, variance=normal_variance, x=normal_size)
 
 
-triangular_rv_outputs
+# In[855]:
 
 
-# In[820]:
-
-
-triangular_lower = 1000
-triangular_upper = 10000
-triangular_mode = 6000
-triangular_size = 1000
-
-triangular_rv_outputs = draw_triangular_rv(a=triangular_lower, b=triangular_upper, c=triangular_mode, 
-                                          x=triangular_size)
+normal_rv_outputs
 
