@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[29]:
+# In[1]:
 
 
 import random
@@ -24,17 +24,17 @@ import math
 # - Graphs:
 # ![image-7.png](attachment:image-7.png)
 
-# In[36]:
+# In[2]:
 
 
 def generate_prn():
     return random.random()
 
 
-# In[411]:
+# In[3]:
 
 
-# generate x uniform random variate for n euqally likely outcomes
+# generate x uniform random variate for n equally likely outcomes
 
 def generate_uniform_rv(n, x):
     outputs = []
@@ -54,7 +54,7 @@ def generate_uniform_rv(n, x):
     return outputs
 
 
-# In[412]:
+# In[4]:
 
 
 def draw_uniform_rv(n, x):
@@ -79,13 +79,13 @@ def draw_uniform_rv(n, x):
     return rv_outputs
 
 
-# In[413]:
+# In[5]:
 
 
 uniform_outcomes = 6
 
 
-# In[431]:
+# In[6]:
 
 
 # small sample size
@@ -94,13 +94,19 @@ uniform_size = 20
 uniform_rv_outputs = draw_uniform_rv(n=uniform_outcomes, x=uniform_size)
 
 
-# In[432]:
+# In[7]:
 
 
 uniform_rv_outputs
 
 
-# In[429]:
+# In[5]:
+
+
+uniform_outcomes = 6
+
+
+# In[13]:
 
 
 # big sample size
@@ -109,10 +115,10 @@ uniform_size = 1000
 uniform_rv_outputs = draw_uniform_rv(n=uniform_outcomes, x=uniform_size)
 
 
-# In[430]:
+# In[14]:
 
 
-uniform_rv_outputs
+print(uniform_rv_outputs)
 
 
 # ## Bernoulli distribution
@@ -126,7 +132,7 @@ uniform_rv_outputs
 # - Graphs:
 # ![image-2.png](attachment:image-2.png)
 
-# In[37]:
+# In[16]:
 
 
 # generate x bernoulli random variates i.e. trials with probability p
@@ -147,7 +153,7 @@ def generate_bernoulli_rv(p, x):
     return outputs, prns
 
 
-# In[127]:
+# In[17]:
 
 
 def draw_bernoulli_rv(p, x):
@@ -162,26 +168,26 @@ def draw_bernoulli_rv(p, x):
     return rv_outputs
 
 
-# In[54]:
+# In[32]:
 
 
 bernoulli_p = 0.2
 
 
-# In[141]:
+# In[33]:
 
 
 # small sample size
 bernoulli_rv_outputs = draw_bernoulli_rv(p=bernoulli_p, x=1)
 
 
-# In[142]:
+# In[34]:
 
 
 bernoulli_rv_outputs
 
 
-# In[130]:
+# In[30]:
 
 
 # small sample size
@@ -190,13 +196,13 @@ bernoulli_size = 10
 bernoulli_rv_outputs = draw_bernoulli_rv(p=bernoulli_p, x=bernoulli_size)
 
 
-# In[131]:
+# In[31]:
 
 
-bernoulli_rv_outputs
+print(bernoulli_rv_outputs)
 
 
-# In[132]:
+# In[24]:
 
 
 # big sample size
@@ -205,10 +211,10 @@ bernoulli_size = 1000
 bernoulli_rv_outputs = draw_bernoulli_rv(p=bernoulli_p, x=bernoulli_size)
 
 
-# In[133]:
+# In[25]:
 
 
-bernoulli_rv_outputs
+print(bernoulli_rv_outputs)
 
 
 # ## Binomial distribution
@@ -222,7 +228,7 @@ bernoulli_rv_outputs
 # - Graphs:
 # ![image-3.png](attachment:image-3.png)
 
-# In[111]:
+# In[35]:
 
 
 # generate x binomial random variates of bernoulli trials with probability p
@@ -239,7 +245,7 @@ def generate_binomial_rv(p, x):
     return outputs
 
 
-# In[136]:
+# In[36]:
 
 
 def draw_binomial_rv(p, x):
@@ -264,13 +270,13 @@ def draw_binomial_rv(p, x):
     return rv_outputs
 
 
-# In[118]:
+# In[37]:
 
 
 binomial_p = 0.7
 
 
-# In[137]:
+# In[38]:
 
 
 # small sample size
@@ -279,13 +285,13 @@ binomial_size = 20
 binomial_rv_outputs = draw_binomial_rv(p=binomial_p, x=binomial_size)
 
 
-# In[138]:
+# In[40]:
 
 
-binomial_rv_outputs
+print(binomial_rv_outputs)
 
 
-# In[139]:
+# In[41]:
 
 
 # big sample size
@@ -294,16 +300,10 @@ binomial_size = 1000
 binomial_rv_outputs = draw_binomial_rv(p=binomial_p, x=binomial_size)
 
 
-# In[91]:
+# In[43]:
 
 
-draw_binomial_rv(p=binomial_p, x=binomial_size, y_axis='probability')
-
-
-# In[140]:
-
-
-binomial_rv_outputs
+print(binomial_rv_outputs)
 
 
 # ## Geometric distribution
@@ -365,7 +365,7 @@ draw_geometric_distribution(p=0.6)
 draw_geometric_distribution(p=0.8)
 
 
-# In[280]:
+# In[44]:
 
 
 # generate x geometric random variate of bernoulli trials with probability p
@@ -388,7 +388,7 @@ def generate_geometric_rv(p, x):
     return outputs, trial_counts
 
 
-# In[290]:
+# In[45]:
 
 
 def draw_geometric_rv(p, x):
@@ -401,13 +401,13 @@ def draw_geometric_rv(p, x):
     return trial_counts
 
 
-# In[284]:
+# In[46]:
 
 
 geometric_p = 0.2
 
 
-# In[293]:
+# In[47]:
 
 
 # small sample size
@@ -416,13 +416,13 @@ geometric_size = 10
 geometric_rv_outputs = draw_geometric_rv(p=geometric_p, x=geometric_size)
 
 
-# In[294]:
+# In[48]:
 
 
-geometric_rv_outputs
+print(geometric_rv_outputs)
 
 
-# In[295]:
+# In[49]:
 
 
 # big sample size
@@ -431,10 +431,10 @@ geometric_size = 1000
 geometric_rv_outputs = draw_geometric_rv(p=geometric_p, x=geometric_size)
 
 
-# In[296]:
+# In[50]:
 
 
-geometric_rv_outputs
+print(geometric_rv_outputs)
 
 
 # ## Poisson distribution
@@ -448,7 +448,7 @@ geometric_rv_outputs
 # - Graphs:
 # ![image-6.png](attachment:image-6.png)
 
-# In[434]:
+# In[51]:
 
 
 # generate x poisson random variate within a time period
@@ -469,7 +469,7 @@ def generate_poisson_rv(l, x):
     return outputs
 
 
-# In[372]:
+# In[52]:
 
 
 def draw_poisson_rv(l, x):
@@ -488,13 +488,13 @@ def draw_poisson_rv(l, x):
     return rv_outputs
 
 
-# In[435]:
+# In[53]:
 
 
 poisson_lambda = 2
 
 
-# In[436]:
+# In[54]:
 
 
 # small sample size
@@ -503,13 +503,13 @@ lambda_size = 10
 poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=lambda_size)
 
 
-# In[437]:
+# In[55]:
 
 
-poisson_rv_outputs
+print(poisson_rv_outputs)
 
 
-# In[438]:
+# In[56]:
 
 
 # big sample size
@@ -518,21 +518,27 @@ poisson_size = 1000
 poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
 
 
-# In[439]:
+# In[57]:
 
 
-poisson_rv_outputs
+print(poisson_rv_outputs)
 
 
-# In[440]:
+# In[60]:
 
 
 poisson_size = 1000
+
+poisson_lambda = 1
+poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
 
 poisson_lambda = 2
 poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
 
 poisson_lambda = 4
+poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
+
+poisson_lambda = 10
 poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
 
 
@@ -547,7 +553,7 @@ poisson_rv_outputs = draw_poisson_rv(l=poisson_lambda, x=poisson_size)
 # - Graphs: (Y axis is basically lambda, the area below the curve is the probability)
 # ![image-11.png](attachment:image-11.png)
 
-# In[569]:
+# In[61]:
 
 
 # generate x exponential random variate between two consecutive events
@@ -572,7 +578,7 @@ def generate_exponential_rv(l, x):
     return outputs
 
 
-# In[570]:
+# In[62]:
 
 
 def draw_exponential_rv(l, x):
@@ -594,40 +600,42 @@ def draw_exponential_rv(l, x):
     return rv_outputs
 
 
-# In[585]:
+# In[63]:
 
 
 exponential_lambda = 1
 
 
-# In[586]:
+# In[64]:
 
 
 # small sample size
 exponential_size = 10
 
-exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, 
+                                             x=exponential_size)
 
 
-# In[587]:
+# In[65]:
 
 
-exponential_rv_outputs
+print(exponential_rv_outputs)
 
 
-# In[588]:
+# In[66]:
 
 
 # big sample size
 exponential_size = 1000
 
-exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, 
+                                             x=exponential_size)
 
 
-# In[589]:
+# In[68]:
 
 
-exponential_rv_outputs
+print(exponential_rv_outputs)
 
 
 # In[590]:
@@ -638,7 +646,7 @@ exponential_size = 10
 d = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
 
 
-# In[591]:
+# In[69]:
 
 
 exponential_size = 1000
@@ -684,7 +692,7 @@ for k in ks:
 
 
 
-# In[657]:
+# In[70]:
 
 
 # generate x weibull random variate between two consecutive events
@@ -704,7 +712,7 @@ def generate_weibull_rv(l, x, k):
     return outputs
 
 
-# In[688]:
+# In[71]:
 
 
 def draw_weibull_rv(l, x, k):
@@ -723,34 +731,58 @@ def draw_weibull_rv(l, x, k):
     return rv_outputs
 
 
-# In[698]:
+# In[72]:
 
 
 weibull_lambda = 1
 weibull_k = 0.5
 weibull_size = 1000
 
-weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, 
+                                     x=weibull_size, 
+                                     k=weibull_k)
 
 
-# In[699]:
+# In[73]:
+
+
+print(weibull_rv_outputs)
+
+
+# In[74]:
 
 
 weibull_lambda = 1
 weibull_k = 1
 weibull_size = 1000
 
-weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, 
+                                     x=weibull_size, 
+                                     k=weibull_k)
 
 
-# In[700]:
+# In[75]:
+
+
+print(weibull_rv_outputs)
+
+
+# In[76]:
 
 
 weibull_lambda = 1
 weibull_k = 2
 weibull_size = 1000
 
-weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull_k)
+weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, 
+                                     x=weibull_size, 
+                                     k=weibull_k)
+
+
+# In[77]:
+
+
+print(weibull_rv_outputs)
 
 
 # In[701]:
@@ -781,7 +813,7 @@ weibull_rv_outputs = draw_weibull_rv(l=weibull_lambda, x=weibull_size, k=weibull
 # - Graphs: 
 # ![image-16.png](attachment:image-16.png)
 
-# In[846]:
+# In[78]:
 
 
 # generate x normal random variate with mean and variance
@@ -798,7 +830,7 @@ def generate_normal_nv(mu, variance, x):
     return outputs
 
 
-# In[847]:
+# In[79]:
 
 
 def draw_normal_rv(mu, variance, x):
@@ -817,14 +849,14 @@ def draw_normal_rv(mu, variance, x):
     return rv_outputs
 
 
-# In[849]:
+# In[80]:
 
 
 normal_mu = 3
 normal_variance = 16
 
 
-# In[851]:
+# In[81]:
 
 
 # small sample size
@@ -833,13 +865,13 @@ normal_size = 10
 normal_rv_outputs = draw_normal_rv(mu=normal_mu, variance=normal_variance, x=normal_size)
 
 
-# In[853]:
+# In[83]:
 
 
-normal_rv_outputs
+print(normal_rv_outputs)
 
 
-# In[854]:
+# In[84]:
 
 
 # big sample size
@@ -848,8 +880,14 @@ normal_size = 1000
 normal_rv_outputs = draw_normal_rv(mu=normal_mu, variance=normal_variance, x=normal_size)
 
 
-# In[855]:
+# In[85]:
 
 
-normal_rv_outputs
+print(normal_rv_outputs)
+
+
+# In[ ]:
+
+
+
 
