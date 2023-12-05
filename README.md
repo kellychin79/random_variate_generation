@@ -1,0 +1,1 @@
+There are two Python files, ipynb and py file, containing the same code. For the first time, I recommend viewing the ipynb file to see the examples and respective parameter values for different distributions, examine the visualization and the random variate outputs. It helps the users to quickly understand what each function tries to resolve.
