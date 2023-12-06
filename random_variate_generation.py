@@ -24,7 +24,7 @@ import math
 # - Graphs:
 # ![image-7.png](attachment:image-7.png)
 
-# In[2]:
+# In[6]:
 
 
 def generate_prn():
@@ -591,12 +591,12 @@ plt.show()
 # - Graphs: (Y axis is basically lambda, the area below the curve is the probability)
 # ![image-11.png](attachment:image-11.png)
 
-# In[249]:
+# In[2]:
 
 
 # generate x exponential random variate between two consecutive events
 
-def generate_exponential_rv(l, x):
+def wrong_generate_exponential_rv(l, x):
     outputs = []
     
     for i in range(x):
@@ -616,82 +616,123 @@ def generate_exponential_rv(l, x):
     return outputs
 
 
-# In[267]:
+# In[34]:
+
+
+# generate x exponential random variate between two consecutive events
+
+def generate_exponential_rv(l, x):
+    outputs = []
+    
+    for i in range(x):
+        prn = generate_prn()
+        
+        rv = -1/l*math.log(prn, 2)
+        
+        outputs.append(rv)    
+        
+    return outputs
+
+
+# In[89]:
 
 
 def draw_exponential_rv(l, x):
     rv_outputs = generate_exponential_rv(l, x)
     
     plt.figure(figsize=(5,3))
-    plt.title(label='lambda = '+str(l)+', x = '+str(x))
+    plt.title(label='lambda = '+str(l)+', x = '+str(x))    
     
+    sorted_rv = sorted(rv_outputs, reverse=True)
+    sorted_rv_array = np.array(sorted_rv)
+    
+    max_rv = max(sorted_rv)
+    min_rv = min(sorted_rv)
+    
+    if x <= 40:
+        interval_ct = 4
+    else:
+        interval_ct = 10
+        
     values = []
     counts = []
-    for i in set(rv_outputs):
-        values.append(i)
-        counts.append(rv_outputs.count(i))
     
-    plt.bar(x=values, height=counts)
+    for i in range(interval_ct+1):
+        cut_off = i*(max_rv/interval_ct)
+        values.append(cut_off)
+        rv_smaller_than_cutoff = sorted_rv_array > cut_off
+        counts.append(sum(rv_smaller_than_cutoff))
+    
+    plt.plot(values, counts) 
     plt.xlabel('# of time unit elapsed between events')
     plt.ylabel('count')
     
     return rv_outputs
 
 
-# In[268]:
+# In[100]:
 
 
-exponential_lambda = 1
-
-
-# In[273]:
-
+exp_lambda = 1
 
 # small sample size
-exponential_size = 10
+exp_size = 20
 
-exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, 
-                                             x=exponential_size)
+exponential_rv_outputs = draw_exponential_rv(l=exp_lambda, 
+                                             x=exp_size)
 
 
-# In[274]:
+# In[101]:
 
 
 print(exponential_rv_outputs)
 
 
-# In[271]:
+# In[113]:
 
+
+exp_lambda = 1
 
 # big sample size
-exponential_size = 1000
+exp_size = 1000
 
-exponential_rv_outputs = draw_exponential_rv(l=exponential_lambda, 
-                                             x=exponential_size)
-
-
-# In[272]:
+exponential_rv_outputs = draw_exponential_rv(l=exp_lambda, 
+                                             x=exp_size)
 
 
-print(exponential_rv_outputs)
+# In[114]:
 
 
-# In[275]:
+for i in range(10):
+    print(exponential_rv_outputs[i])
 
 
-exponential_lambda = 0.5
-exponential_size = 10
-d = draw_exponential_rv(l=exponential_lambda, x=exponential_size)
+# In[117]:
 
 
-# In[281]:
+exp_lambda = 5
+
+exp_size = 1000
+
+exponential_rv_outputs = draw_exponential_rv(l=exp_lambda, 
+                                             x=exp_size)
 
 
-all_lambdas = [0.25, 0.5, 1, 1.5]
+# In[118]:
+
+
+for i in range(10):
+    print(exponential_rv_outputs[i])
+
+
+# In[112]:
+
+
+all_lambdas = [0.5, 1, 1.5, 5]
 legend_values = []
 sample_size = 1000
 
-plt.figure(figsize=(8,4))
+plt.figure(figsize=(5,3))
 plt.title(label='lambda = '+str(all_lambdas)
                  +', x = '+str(sample_size))
     
@@ -699,14 +740,25 @@ for l in all_lambdas:
     legend_values.append('λ = '+str(l))
     rv_outputs = generate_exponential_rv(l, 
                                          x=sample_size)
-
+    
+    sorted_rv = sorted(rv_outputs, reverse=True)
+    sorted_rv_array = np.array(sorted_rv)
+    
+    max_rv = max(sorted_rv)
+    min_rv = min(sorted_rv)
+    
+    interval_ct = 10
+        
     values = []
     counts = []
-    for i in set(rv_outputs):
-        values.append(i)
-        counts.append(rv_outputs.count(i))
-
-    plt.plot(values, counts)
+    
+    for i in range(interval_ct):
+        cut_off = i*(max_rv/interval_ct)
+        values.append(cut_off)
+        rv_smaller_than_cutoff = sorted_rv_array > cut_off
+        counts.append(sum(rv_smaller_than_cutoff))
+    
+    plt.plot(values, counts) 
     
 plt.legend(legend_values, loc ="upper right")     
 plt.xlabel('# of time unit elasped between events')
